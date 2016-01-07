@@ -18,6 +18,8 @@
     </application>
 
     <!--表示被测试的目标包与instrumentation的名称。-->
-    <instrumentation android:targetPackage="com.ihongqiqu.instrumentationdemo" android:name="android.test.InstrumentationTestRunner" />
+    <instrumentation
+        android:targetPackage="com.ihongqiqu.instrumentationdemo"
+        android:name="android.test.InstrumentationTestRunner" />
 
 </manifest>

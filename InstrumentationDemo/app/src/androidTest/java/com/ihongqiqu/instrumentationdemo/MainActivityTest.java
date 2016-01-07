@@ -5,6 +5,7 @@ import android.os.SystemClock;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -17,6 +18,7 @@ public class MainActivityTest extends InstrumentationTestCase {
     private MainActivity mainActivity;
     private Button btnTest;
     private TextView tvTest;
+    private EditText etName;
 
     @Override
     protected void setUp() throws Exception {
@@ -28,6 +30,7 @@ public class MainActivityTest extends InstrumentationTestCase {
         mainActivity = (MainActivity) getInstrumentation().startActivitySync(intent);
         tvTest = (TextView) mainActivity.findViewById(R.id.tv_test);
         btnTest = (Button) mainActivity.findViewById(R.id.btn_test);
+        etName = (EditText) mainActivity.findViewById(R.id.et_name);
     }
 
     @Override
@@ -44,26 +47,37 @@ public class MainActivityTest extends InstrumentationTestCase {
                 btnTest.performClick();
             }
         });
-
         SystemClock.sleep(3000);
-
-        assertEquals("Test", tvTest.getText().toString());
+        assertEquals("TEST", tvTest.getText().toString());
     }
 
     public void testAdd() {
         Log.d("MainActivityTest", "testAdd()");
-
         int result = mainActivity.add(3, 5);
-
         assertEquals(8, result);
     }
 
     public void testIsTure() {
         Log.d("MainActivityTest", "testIsTure()");
-
         assertTrue(mainActivity.isTrue(Boolean.TRUE));
         assertFalse(mainActivity.isTrue(Boolean.FALSE));
-        assertFalse(mainActivity.isTrue(Boolean.FALSE));
+        assertFalse(mainActivity.isTrue(null));
+    }
+
+    public void testEditText() {
+        Log.d("MainActivityTest", "testEditText()");
+        mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                etName.requestFocus();
+
+            }
+        });
+        SystemClock.sleep(2000);
+        // this.sendKeys("jingle1267");
+        getInstrumentation().sendStringSync("jingle1267");
+        SystemClock.sleep(2000);
+        assertEquals("jingle1267", etName.getText().toString());
     }
 
 }
